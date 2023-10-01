@@ -1,27 +1,30 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil , faTrash , faLocationDot , faPhone , faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import "../../styles/demo.css";
+
 
 export const ContactCard = ({ name, address, phone, email, id }) => {
     const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
+ 
 
-    const handleDelete = () => {
-        actions.deleteUsers(id);
-        actions.getUsers();
+    const handleDelete = (uid) => {
+        console.log(uid);
+        actions.deleteUsers(uid);
     };
-
-   /* const handlePut = () => {
-        actions.putUsers();
+    
+  /* const handlePut = () => {
+        actions.putUsers(updatedUser);
     }*/
 
     return (
-        <li className="list-group-item d-flex justify-content-between align-items-center">
+        <li key={id} className="list-group-item d-flex justify-content-between align-items-center">
             <div className="card mb-3" style={{ maxWidth: "700px" }}>
                 <div className="row">
                     <div className="col-md-4">
-                        <img src="https://i.pinimg.com/originals/5f/c8/af/5fc8afde9f20cfadfb97292605934028.jpg" className="card-img" alt="..."></img>
+                        <img src="https://static.wikia.nocookie.net/doblaje/images/4/44/Freddy-freddy-krueger-33746737-500-614.jpg/revision/latest/thumbnail/width/360/height/450?cb=20140817034203&path-prefix=es" className="card-img" alt="..."/>
                     </div>
                     <div className="col-md-8">
                         <div className="card-body" style={{ width: "700px" }}>
@@ -34,13 +37,15 @@ export const ContactCard = ({ name, address, phone, email, id }) => {
                 </div>
             </div>
             <span className="mr-5">
-                <button type="button" className="btn" /*onClick={handlePut}*/>
+                <Link to={`/edit-contact/${id}`}>
+                <button type="button" className="btn" >
                     <FontAwesomeIcon icon={faPencil} />
                 </button>
-                <button type="button" className="btn"  onClick={handleDelete}>
+                </Link>
+                <button type="button" className="btn" onClick={() => handleDelete(id)}>
                     <FontAwesomeIcon icon={faTrash} />
                 </button>
             </span>
         </li>
-    )
-}
+    );
+};

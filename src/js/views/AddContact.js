@@ -18,7 +18,6 @@ export const AddContact = () => {
 		const { name, value } = event.target;
 		//setNewContact({ ...newContact, [name]: value });
 		setNewContact({ ...newContact, [name]: value });
-		console.log(newContact);
 	};
 
 	const addNewContact =(event) => {

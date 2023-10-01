@@ -65,28 +65,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const response = await fetch(url, options);
 				if (response.ok) {
 					const data = await response.json();
-					const updatedUsers = [...getStore().users, newContact];
-					setStore({ users: updatedUsers });
+					getActions().getUsers();				
 				} else {
 					console.log("ERROR:", response.status, response.statusText);
 				}
 			},
 
-			putUsers: async () => {
-				const url = "https://playground.4geeks.com/apis/fake/contact/agenda/ElisaGarcia";
+			putUsers: async (id, updatedUser) => {
+				const url = `https://playground.4geeks.com/apis/fake/contact/agenda/ElisaGarcia/${id}`;
 				const options = {
 					method: "PUT",
-					headers: { "Content-Type": "application/json" }
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(updatedUser)
 				};
 				const response = await fetch(url, options);
 				if (response.ok) {
 					const data = await response.json();
-					const newData = [data];
-					setStore({users: newData});
+					getActions().getUsers();
+					getActions().updateContactInStore(id, updatedUser);
+					//const newData = [data];
+					//setStore({users: newData});
 
 				} else {
 					console.log("ERROR:", response.status, response.statusText);
 				}
+			},
+
+			updateContactInStore: (id, updatedContact) => {
+				const store = getStore();
+				const updatedUsers = store.users.map(user =>
+					user.id === id ? { ...user, ...updatedContact } : user
+				);
+				setStore({ users: updatedUsers });
 			},
 
 			deleteUsers: async (id) => {
@@ -97,8 +107,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				const response = await fetch(url, options);
 				if (response.ok) {
-				
 				    const data = await response.json();
+					getActions().getUsers();
 				    console.log(data);
 				
 					{/*const newUsers = getStore().users.filter(item => item.id !== id);
