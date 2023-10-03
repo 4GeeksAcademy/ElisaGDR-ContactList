@@ -27,8 +27,8 @@ export const EditContact = (id) => {
     };*/
     const submitContact = async (event) => {
         event.preventDefault();
-        await actions.putUsers(updatedContact.id, updatedUser);
-        getActions().updateContactInStore(updatedContact.id, updatedUser);
+        actions.putUsers(updatedContact.id, updatedUser);
+        actions.updateContactInStore(updatedContact.id, updatedUser);
     };
     const handleInput = (event) => {
         const { name, value } = event.target;

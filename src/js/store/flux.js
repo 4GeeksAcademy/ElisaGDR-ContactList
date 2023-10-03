@@ -72,7 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			putUsers: async (id, updatedUser) => {
-				const url = `https://playground.4geeks.com/apis/fake/contact/agenda/ElisaGarcia/${id}`;
+				const url = `https://playground.4geeks.com/apis/fake/contact/${id}`;
 				const options = {
 					method: "PUT",
 					headers: { "Content-Type": "application/json" },
